@@ -1,0 +1,18 @@
+{% extends "ucitel/base.html" %}
+{% block body %}
+<h3 style="text-align: center;">Zabezpečované predmety</h3>              
+
+	<hr>
+	<ul class='list'>
+		{% for predmet in zabezpecovane_predmety %}
+ 		<li style="list-style:none">
+			<a  style="width:100%" class="btn btn-primary" 
+				href="{{url_for('ucitel.manazuj_predmet',predmet_id=predmet.id,zapocet='no')}}">
+ 				{{predmet.meno}}
+ 			</a>
+ 		</li>
+
+ 		
+	 	{% endfor %}
+	</ul>
+{% endblock %}

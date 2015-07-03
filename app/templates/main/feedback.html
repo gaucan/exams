@@ -1,0 +1,24 @@
+<!-- extend base layout based on user's role-->
+{% if is_ucitel %}
+    {% extends "ucitel/base.html" %}
+{% else %}
+    {% extends "student/base.html" %}
+{% endif %}
+
+{% block body %}
+    <form class='form-horizontal' role='form' method="post">
+        {{ form.csrf }}
+        {{ form.hidden_tag() }}
+     
+        <div class="form-group">
+                {{ form.comment.label }} 
+                {{ form.comment(required=True,
+            class="form-control", rows="3" ) }}
+
+
+            <div class="input submit">
+                <input type="submit" value="Submit" />
+            </div>
+        </div>
+    </form>
+{% endblock %}

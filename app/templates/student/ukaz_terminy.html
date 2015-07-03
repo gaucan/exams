@@ -1,0 +1,63 @@
+{% extends "student/base.html" %}
+{% block body %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').dataTable();
+  } );
+</script>
+<h3>Vypísané termíny skúšok pre predmet {{predmet.meno}}</h3>
+<h4>Tvoje body za semester: 
+	{% if student_predmetu.body_za_semester < predmet.zapocet %}
+	<span style="color:red">
+		{{student_predmetu.body_za_semester}}	
+	</span>
+	{%else%}
+	<span style="color:green">
+		{{student_predmetu.body_za_semester}}	
+	</span>
+	{%endif%}
+</h4>
+<h4>Minimum potrebných bodov pre zápočet: {{predmet.zapocet}}</h4>
+ 	<hr>
+      <table class="table table-striped table-bordered" id="example">
+		<thead>
+		<tr>
+			<th>Začiatok skúšky</th>
+			<th>Uzávierka prihlasovania</th>
+			<th>Stav</th>
+			<th>Kapacita</th>
+			<th>Miestnosť</th>
+			<th>Poznámka</th>
+		</tr>
+		</thead>
+		<tbody>
+
+		{% for termin in terminy %}
+	 		<tr>
+	 			<td>
+		 			{{termin.zaciatok_skusky}}	
+	 			</td>
+	 			<td>
+	 				{{termin.uzavierka_prihlasovania}}
+	 			</td>
+	 			<td>
+	 				{%if tpl[termin]%}
+			 				Odhlasit sa 
+				 	{%else%}
+			 				Prihlasit sa 
+			 		{%endif%}
+			 	</td>
+			 	<td>
+						{{cnt[termin]}}/{{termin.kapacita}} 				
+	 			</td>
+	 			<td>
+	 				{{termin.miestnost.meno}}
+	 			</td>
+	 			<td>
+	 				{{termin.poznamka}}
+	 			</td>
+	 		</tr>
+	 	{% endfor %}
+	 	</tbody> 
+	</table>
+{% endblock %}

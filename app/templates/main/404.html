@@ -1,0 +1,10 @@
+<!-- extend base layout based on user's role-->
+{% if is_ucitel %}
+    {% extends "ucitel/base.html" %}
+{% else %}
+    {% extends "student/base.html" %}
+{% endif %}
+
+{% block body %}
+<h1>File Not Found</h1>
+{% endblock %}

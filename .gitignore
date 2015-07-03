@@ -1,0 +1,17 @@
+#compiled python files
+*.pyc
+
+#ignore some not important  temporary latex files
+tex-files/*aux
+tex-files/*tex~
+tex-files/praca.fdb_latexmk
+tex-files/praca.fls
+tex-files/praca.log
+tex-files/praca.toc
+
+#file for checking new version of  pip
+pip-selfcheck.json
+
+funkload_test/reports
+
+trash

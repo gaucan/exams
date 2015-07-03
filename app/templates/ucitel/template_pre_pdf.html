@@ -1,0 +1,71 @@
+{% extends "ucitel/base.html" %}
+{% block body %}
+
+<style type="text/css">
+	.skupina
+	{
+		width:4px;
+	}
+	.meno
+	{
+		width:10px;
+	}
+	.body
+	{
+		width:1px;
+	}
+	.znamka
+	{
+		width:1px;
+	}
+	.poznamka
+	{
+		width:122px;
+	}
+	tbody{
+				/*overflow:hidden; padding: 0px 0px;*/
+
+	}
+</style>
+
+<table class="table table-striped table-bordered" id="example">
+	<thead>
+		<tr style="background-color:black; color:white" >
+			<th class="skupina">SKUP</th>
+			<th class="meno">MENO</th>
+			<th class="body">BOD</th> <!-- za semester -->
+			<th class="znamka">FX</th>
+			<th class="poznamka"></th>
+		</tr>
+	</thead>
+	<tbody>
+
+	{% for student_predmetu in prihlaseni_studenti %}
+ 		<tr>
+ 			<td class="skupina">
+	 			{{student_predmetu.student.skupina}}	
+ 			</td>
+ 			<td class="meno">
+	 			{{student_predmetu.student.user.priezvisko}}
+	 			<br>
+	 			 {{student_predmetu.student.user.meno}} 	
+ 			</td>
+ 			<td class="body">
+ 				<br>
+                {{student_predmetu.body_za_semester}}			 				
+	 		</td>
+	 		<td class="znamka">
+	 		</td>
+	 		<td class="poznamka">
+	 			{{student_predmetu.datum1.strftime('%-d.%-m')}} - {{student_predmetu.poznamka1}}
+	 			<br>
+	 			{{student_predmetu.datum2.strftime('%-d.%-m')}} - {{student_predmetu.poznamka2}}
+	 			<br>
+	 			{{student_predmetu.datum3.strftime('%-d.%-m')}} - {{student_predmetu.poznamka3}}
+
+	 		</td>
+ 		</tr>
+ 	{% endfor %}
+ 	</tbody> 
+</table>
+{% endblock %}

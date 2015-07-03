@@ -1,0 +1,15 @@
+{% extends "student/base.html" %}
+{% block body %}
+<h3 style="  text-align: center;">Zapísané Predmety</h3>
+	<hr>
+	<ul class='list'>
+		{% for predmet in zap_predmety %}
+ 		<li style="list-style:none">
+			<a  style="width:100%" class="btn btn-primary" 
+				href="{{url_for('student.ukaz_terminy',predmet_id=predmet.id)}}">
+ 				{{predmet.meno}}
+ 			</a>
+ 		</li>
+	 	{% endfor %}
+	</ul>
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends "ucitel/base.html" %}
+{% block body %}
+    <!-- CSS a JS pre timepicker -->
+    <script type="text/javascript" src="{{url_for('static',filename='js/bootstrap-timepicker.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap-timepicker.min.css')}}">
+
+    <form method="post">
+        {{ form.hidden_tag() }}
+            <!-- Zaciatok skusky , datum -->
+            <div class="form-group">
+                {{form.zaciatok_skusky_datum.label}}
+                {{form.zaciatok_skusky_datum(class_='form-control datepicker',
+                             placeholder='Sem zadaj dátum začiatku skúšky',
+                           **{'data-provide':'datepicker'},
+                           )
+                }}
+            </div>
+ 
+            {% if form.zaciatok_skusky_datum.errors %}
+                <ul class="errors">
+                    {% for error in form.zaciatok_skusky_datum.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+   
+            <!-- Zaciatok skusky , cas -->
+            <script type="text/javascript">
+            $(function() {
+                    $('.timepicker').timepicker();
+                });
+            </script>
+
+                {{form.zaciatok_skusky_cas.label}}
+            <div class="input-group  bootstrap-timepicker">
+                {{form.zaciatok_skusky_cas(class_='form-control input-small timepicker',
+                             placeholder='Sem zadaj čas začiatku skúšky')}}
+                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+            </div>
+ 
+            {% if form.zaciatok_skusky_cas.errors %}
+                <ul class="errors">
+                    {% for error in form.zaciatok_skusky_cas.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+
+            <!-- uzavierka_prihlasovania_datum -->
+            <div class="form-group">
+                {{form.uzavierka_prihlasovania_datum.label}}
+                {{form.uzavierka_prihlasovania_datum(class_='form-control datepicker',
+                             placeholder='Sem zadaj dátum uzávierky prihlasovania',
+                           **{'data-provide':'datepicker'}
+                           )
+                }}
+            </div>
+ 
+            {% if form.uzavierka_prihlasovania_datum.errors %}
+                <ul class="errors">
+                    {% for error in form.uzavierka_prihlasovania_datum.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+
+            <!-- uzavierka_prihlasovania_cas -->
+            {{form.uzavierka_prihlasovania_cas.label}}
+            <div class="input-group form-group bootstrap-timepicker">
+                {{form.uzavierka_prihlasovania_cas(class_='form-control input-small timepicker',
+                             placeholder='Sem zadaj čas uzávierky prihlasovania')}}
+                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+            </div>
+ 
+            {% if form.uzavierka_prihlasovania_cas.errors %}
+                <ul class="errors">
+                    {% for error in form.uzavierka_prihlasovania_cas.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        
+            <!-- Miestnost -->
+            <div class="form-group">
+                {{form.miestnost.label}}
+                {{form.miestnost(class_='form-control',
+                             placeholder='Sem zadaj  miestnosť')
+                }}
+            </div>
+ 
+            {% if form.miestnost.errors %}
+                <ul class="errors">
+                    {% for error in form.miestnost.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <!-- kapacita -->
+            <div class="form-group">
+                {{form.kapacita.label}}
+                {{form.kapacita(class_='form-control',
+                             placeholder='Sem zadaj kapacitu')
+                }}
+            </div>
+ 
+            {% if form.kapacita.errors %}
+                <ul class="errors">
+                    {% for error in form.kapacita.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <!-- poznamka -->
+            <div class="form-group">
+                {{form.poznamka.label}}
+                {{form.poznamka(class_='form-control',
+                             placeholder='Sem zadaj poznámku')
+                }}
+            </div>
+ 
+            {% if form.poznamka.errors %}
+                <ul class="errors">
+                    {% for error in form.poznamka.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            
+        <button class="btn btn-primary" style="display:table;">Potvrdiť</button>
+    </form>
+    <script type="text/javascript">
+$('.datepicker').datepicker({
+    format: "dd/mm/yyyy",
+    autoclose: true,
+})
+</script>
+
+{% endblock %}

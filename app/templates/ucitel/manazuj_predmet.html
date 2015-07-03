@@ -1,0 +1,158 @@
+{% extends "ucitel/base.html" %}
+{% block body %}
+
+<script>
+function filter_by_termin( predmetId,terminId) {
+  
+    $.get("/ucitel/_manazuj_predmet_json/"+predmetId+"/"+terminId+"/yes", {
+        // text: $(sourceId).text(),
+        // sourceLang: sourceLang,
+        // destLang: destLang
+    }).done(function(result) {
+		document.open();
+		document.write(result.html);
+		document.close();
+
+    }).fail(function() {
+        $("#tbody").text("'Error: Could not contact server.'");
+        // $(loadingId).hide();
+        // $(destId).show();
+    });
+}
+
+$(document).ready(function(){
+$('#termin_selector').on('change',function () {
+        var selectedTerminId = $(this).val();
+        var gen_pdf = $('a#generuj_pdf');
+        // console.log(selectedTerminId);
+        gen_pdf.attr('href', 'url_goes_here');
+
+        if (selectedTerminId=='unfiltered')
+        {
+        	selectedTerminId=0;
+        }
+        $.ajax({
+				 type: "GET",
+				 url: '/ucitel/_manazuj_predmet_json/'+'{{predmet.id}}'+'/'+selectedTerminId+'/yes',
+				 // data: { statusType : statusVal, jobID: job_id },
+				 success: function(result) 
+				 {
+					$("tbody").html(result.html);
+					
+					new_href ="/ucitel/termin" + selectedTerminId + ".pdf";
+					gen_pdf.attr('href', new_href);
+					 if (selectedTerminId==0) gen_pdf.hide();
+					 else gen_pdf.show();
+                 }
+      })
+  });
+});
+</script>
+
+
+<h3>Študenti predmetu {{predmet.meno}}</h3>
+<h4>Na zápočet treba: {{predmet.zapocet}} bodov</h4>
+
+<h4>Filtruj podľa dátumu  vypísaného termínu:</h4>
+<select name="status" id='termin_selector' class='form-control' style="width:200px">
+	<option value='unfiltered'>Žiaden filter</option>
+	{%for termin in terminy%}
+     	<option value='{{termin.id}}'>{{termin.zaciatok_skusky}}</option>
+	{%endfor%}
+</select>
+<a id="generuj_pdf" href="" style="display: none;">
+		Generuj tento termín do PDF
+</a>
+
+<h4>
+	<a href="{{url_for('ucitel.ukaz_terminy',predmet_id=predmet.id)}}">
+		Prejdi na spravovanie termínov
+	</a>
+</h4>
+
+ 	<hr>
+	<form method="post">
+    	<table class="table table-striped table-bordered" id="example">
+			<thead>
+				<tr style="background-color:black; color:white">
+					<th>skup</th>
+					<th>meno</th>
+					<th>ZH</th> <!-- zaverecne hodnotenie, konecna znamka -->
+					<th>body</th> <!-- za semester -->
+					<th>datum</th>
+					<th> </th>
+					<th>poznamka</th>
+					<th>datum</th>
+					<th> </th>
+					<th>poznamka</th>
+					<th>datum</th>
+					<th> </th>
+					<th>poznamka</th>
+				</tr>
+			</thead>
+			<tbody>
+{% for student_predmetu in studenti_predmetu %}
+		 		<tr>
+		 			
+		 			<td>
+			 			{{student_predmetu.student.skupina}}	
+		 			</td>
+		 			<td>
+			 			{{student_predmetu.student.user.priezvisko}} {{student_predmetu.student.user.meno}} 	
+		 			</td>
+		 			<td>
+	           			{{ form['select0_%d'|format(loop.index0)]}}
+		 			</td>
+		 			
+		 			{% if student_predmetu.body_za_semester < predmet.zapocet %}
+		 			<td style="color:red">
+	                    {{ form['body_za_semester_%d'|format(loop.index0)](size=1)}}			 				
+		 			</td>
+		 			{%else%}
+		 			<td style="color:green">
+	                    {{ form['body_za_semester_%d'|format(loop.index0)](size=1)}}			 				
+		 			</td>
+		 			{%endif%}
+		 			
+		 				
+				 		<td style="background-color: lightblue;">
+	                        {{ form['datum1_%d'|format(loop.index0)](size=4)}}
+	                    </td>
+				 		<td style="background-color: lightblue;">
+	                        {{ form['select1_%d'|format(loop.index0)]}}
+	                    </td>
+	                    <td style="background-color: lightblue;"> 
+	                        {{ form['poznamka1_%d'|format(loop.index0)]}}
+	                    </td>
+
+				 		<td style="background-color: lightgreen;">
+	                        {{ form['datum2_%d'|format(loop.index0)](size=4)}}
+	                    </td>
+				 		<td style="background-color: lightgreen;">
+	                        {{ form['select2_%d'|format(loop.index0)]}}
+	                    </td>
+				 		<td style="background-color: lightgreen;">
+	                        {{ form['poznamka2_%d'|format(loop.index0)]}}
+	                    </td>
+
+				 		<td style="background-color: GreenYellow   ;">
+	                        {{ form['datum3_%d'|format(loop.index0)](size=4)}}
+	                    </td>
+				 		<td style="background-color: GreenYellow   ;">
+	                        {{ form['select3_%d'|format(loop.index0)]}}
+	                    </td>
+				 		<td style="background-color: GreenYellow   ;">
+	                        {{ form['poznamka3_%d'|format(loop.index0)]}}
+	                    </td>	 		
+		 		</tr>
+		 	{% endfor %}
+		 	</tbody> 
+		</table>
+		<button class="btn btn-primary">Potvrdit</button>
+	</form>
+	<hr>
+	
+	<a style="width:100%" class="btn btn-primary" href="{{url_for('ucitel.vytvor_skusku',predmet_id=predmet.id)}}">
+		vytvor skusku
+	</a>
+{% endblock %}

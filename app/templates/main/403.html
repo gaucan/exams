@@ -1,0 +1,11 @@
+<!-- extend base layout based on user's role-->
+{% if is_ucitel %}
+    {% extends "ucitel/base.html" %}
+{% else %}
+    {% extends "student/base.html" %}
+{% endif %}
+
+{% block body %}
+<h1>Forbidden</h1>
+<h3>Nemáš práva na prehliadanie tejto stránky.</h3>
+{% endblock %}

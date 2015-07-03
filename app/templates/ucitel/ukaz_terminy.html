@@ -1,0 +1,56 @@
+{% extends "ucitel/base.html" %}
+{% block body %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').dataTable();
+  } );
+</script>
+<h3>Vypísane termíny skúšok pre predmet {{predmet.meno}}</h3>
+ 	<hr>
+      <table class="table table-striped table-bordered" id="example">
+		<thead>
+		<tr>
+			<th>Zaciatok skusky</th>
+			<th>Uzavierka prihlasovania</th>
+			<th>Kapacita</th>
+			<th>Miestnost</th>
+			<th>Poznamka</th>
+			<th>Edit</th>
+		</tr>
+		</thead>
+		<tbody>
+
+		{% for termin in terminy %}
+	 		<tr>
+	 			<td>
+		 			{{termin.zaciatok_skusky}}	
+	 			</td>
+	 			<td>
+	 				{{termin.uzavierka_prihlasovania}}
+	 			</td>
+			 	<td>
+						{{cnt[termin]}}/{{termin.kapacita}} 				
+	 			</td>
+	 			<td>
+	 				{{termin.miestnost.meno}}
+	 			</td>
+	 			<td>
+	 				{{termin.poznamka}}
+	 			</td>
+	 			<td>
+	 				<a href="{{url_for('ucitel.edituj_termin',termin_id=termin.id)}}">
+						X
+					</a>
+	 			</td>
+	 		</tr>
+	 	{% endfor %}
+	 	</tbody> 
+	</table>
+
+	<hr>
+
+	<a style="width:100%" class="btn btn-primary" href="{{url_for('ucitel.vytvor_skusku',predmet_id=predmet.id)}}">
+		vytvor skusku
+	</a>
+
+{% endblock %}
