@@ -24,7 +24,6 @@ Pillow==2.8.1
 pycparser==2.10
 PyPDF2==1.24
 Pyphen==0.9.1
-python-ldap==2.4.19
 PyYAML==3.11
 reportlab==3.1.44
 six==1.9.0
